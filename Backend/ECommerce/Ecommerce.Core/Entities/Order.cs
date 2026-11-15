@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Ecommerce.Core.Entities
@@ -11,5 +12,8 @@ namespace Ecommerce.Core.Entities
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
         public string Status { get; set; }
+
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
     }
 }
