@@ -1,4 +1,4 @@
-﻿
+﻿using Ecommerce.Core.DTOs.Products;
 using Ecommerce.Core.Entities;
 using Ecommerce.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,6 @@ namespace ECommerce.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-
         public ProductController(IProductService productService)
         {
             _productService = productService;
@@ -20,8 +19,8 @@ namespace ECommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var productList = await _productService.GetAllProducts();
-            return Ok(productList);
+            var products = await _productService.GetAllProducts();
+            return Ok(products);
         }
 
         // GET: api/Product/1
@@ -29,40 +28,38 @@ namespace ECommerce.Controllers
         public async Task<IActionResult> GetProductById(int productId)
         {
             var product = await _productService.GetProductById(productId);
-
             if (product == null)
-            {
                 return NotFound("Product not found");
-            }
-
             return Ok(product);
         }
 
         // POST: api/Product
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] Product product)
+        public async Task<IActionResult> AddProduct(
+            [FromBody] CreateProductDto productDto)
         {
-            var createdProduct = await _productService.AddProduct(product);
+            var createdProduct =
+                await _productService.AddProduct(productDto);
 
-            return Ok(createdProduct);
+            return CreatedAtAction(
+              nameof(GetProductById),
+              new {productId = createdProduct.ProductId},
+              createdProduct
+            );
         }
 
         // PUT: api/Product/1
         [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct(
             int productId,
-            [FromBody] Product product)
+            [FromBody] UpdateProductDto productDto)
         {
-            var existingProduct = await _productService.GetProductById(productId);
-            if (existingProduct == null)
-            {
+            var updatedProduct =
+                await _productService.UpdateProduct(productId, productDto);
+
+            if (updatedProduct == null)
                 return NotFound("Product not found");
-            }
-            if (product.ProductId != productId)
-            {
-                return BadRequest("Product ID mismatch");
-            }
-            var updatedProduct = await _productService.UpdateProduct(product);
+
             return Ok(updatedProduct);
         }
 
@@ -70,13 +67,11 @@ namespace ECommerce.Controllers
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
-            var product = await _productService.GetProductById(productId);
+            var deleted = await _productService.DeleteProduct(productId);
 
-            if (product == null)
-            {
+            if (!deleted)
                 return NotFound("Product not found");
-            }
-            await _productService.DeleteProduct(product);
+
             return NoContent();
         }
     }
