@@ -33,6 +33,13 @@ namespace ECommerce.Controllers
             return Ok(product);
         }
 
+        [HttpGet("category")]
+        public async Task<IActionResult> GetAllProductsWithCategory(int categoryId)
+        {
+            var products = await _productService.GetAllProductsWithCategory();
+            return Ok(products);
+        }
+
         // POST: api/Product
         [HttpPost]
         public async Task<IActionResult> AddProduct(

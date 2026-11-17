@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ecommerce.Core.DTOs;
 using Ecommerce.Core.DTOs.Products;
 using Ecommerce.Core.Entities;
 using Ecommerce.Core.Interfaces;
@@ -34,6 +35,11 @@ namespace ECommerce.Services
                 return null;
 
             return _mapper.Map<ProductResponseDto>(product);
+        }
+
+        public async Task<IEnumerable<ProductWithCategoryDto>> GetAllProductsWithCategory()
+        {
+            return await _productRepository.GetAllProductsWithCategory();
         }
 
         public async Task<ProductResponseDto> AddProduct(CreateProductDto productDto)

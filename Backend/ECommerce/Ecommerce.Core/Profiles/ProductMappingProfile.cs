@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ecommerce.Core.DTOs;
 using Ecommerce.Core.DTOs.Products;
 using Ecommerce.Core.Entities;
 using System;
@@ -14,6 +15,7 @@ namespace Ecommerce.Core.Profiles
             CreateMap<CreateProductDto, Product>();
             CreateMap<UpdateProductDto, Product>();
             CreateMap<Product, ProductResponseDto>();
+            CreateMap<Product, ProductWithCategoryDto>();
 
         }
     }

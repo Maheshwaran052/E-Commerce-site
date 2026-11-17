@@ -1,4 +1,5 @@
-﻿using Ecommerce.Core.Entities;
+﻿using Ecommerce.Core.DTOs;
+using Ecommerce.Core.Entities;
 using Ecommerce.Core.Interfaces;
 using Ecommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,18 @@ namespace Ecommerce.Infrastructure.Repositories
                 return null;
             }
             return product;
+        }
+        public async Task<IEnumerable<ProductWithCategoryDto>> GetAllProductsWithCategory()
+        {
+            return await _context.Products
+                .Select(p => new ProductWithCategoryDto
+                {
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CategoryName = p.Category.Name
+                })
+                .ToListAsync();
         }
         public async Task<Product> AddProduct(Product product)
         {
