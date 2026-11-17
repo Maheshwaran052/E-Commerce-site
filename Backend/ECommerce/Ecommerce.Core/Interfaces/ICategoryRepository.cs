@@ -9,6 +9,7 @@ namespace Ecommerce.Core.Interfaces
     {
         Task<IEnumerable<Category>> GetAllCategories();
         Task<Category?> GetCategoryById(int categoryId);
+        Task<IEnumerable<Category>> GetCategoriesWithProductsAndReviews();
         Task<Category> AddCategory(Category category);
         Task<Category> DeleteCategory(Category category);
         Task<Category> UpdateCategory(Category category);

@@ -20,6 +20,8 @@ namespace Ecommerce.Core.Entities
         public int Stock { get; set; }
         public bool IsActive { get; set; }
 
+        public ICollection<ProductReview> Reviews { get; set; } = new List<ProductReview>();
+
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
     }

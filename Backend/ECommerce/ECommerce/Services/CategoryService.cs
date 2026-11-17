@@ -3,6 +3,7 @@ using Ecommerce.Core.Services;
 using AutoMapper;
 using Ecommerce.Core.DTOs.Categories;
 using Ecommerce.Core.Entities;
+using Ecommerce.Core.DTOs;
 
 namespace ECommerce.Services
 {
@@ -25,6 +26,11 @@ namespace ECommerce.Services
             if (category == null)
                 return null;
             return _mapper.Map<CategoryResponseDto>(category);
+        }
+        public async Task<IEnumerable<CategoryWithProductsDto>> GetCategoriesWithProductsAndReviews()
+        {
+            var categories = await _categoryRepository.GetCategoriesWithProductsAndReviews();
+            return _mapper.Map<IEnumerable<CategoryWithProductsDto>>(categories);
         }
         public async Task<CategoryResponseDto> AddCategory(CreateCategoryDto categoryDto)
         {

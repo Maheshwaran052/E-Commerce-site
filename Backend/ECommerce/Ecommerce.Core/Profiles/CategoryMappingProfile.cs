@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using Ecommerce.Core.DTOs;
 
 namespace Ecommerce.Core.Profiles
 {
@@ -14,6 +15,7 @@ namespace Ecommerce.Core.Profiles
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
             CreateMap<Category, CategoryResponseDto>();
+            CreateMap<Category, CategoryWithProductsDto>();
         }
     }
 }

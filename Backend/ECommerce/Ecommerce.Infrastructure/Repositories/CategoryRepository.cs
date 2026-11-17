@@ -26,7 +26,13 @@ namespace Ecommerce.Infrastructure.Repositories
         {
             return await _context.Categories.FindAsync(categoryId);
         }
-
+        public async Task<IEnumerable<Category>> GetCategoriesWithProductsAndReviews()
+        {
+            return await _context.Categories
+                .Include(c => c.Products)
+                    .ThenInclude(p => p.Reviews)
+                .ToListAsync();
+        }
         public async Task<Category> AddCategory(Category category)
         {
             _context.Categories.Add(category);

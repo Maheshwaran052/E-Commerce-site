@@ -20,6 +20,7 @@ namespace Ecommerce.Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<ProductReview> ProductReviews { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
