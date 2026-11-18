@@ -28,6 +28,10 @@ namespace Ecommerce.Infrastructure.Repositories
             if (product == null) {
                 return null;
             }
+            await _context.Entry(product)
+            .Reference(p => p.Category)
+            .LoadAsync();
+
             return product;
         }
         public async Task<IEnumerable<ProductWithCategoryDto>> GetAllProductsWithCategory()
